@@ -2,6 +2,7 @@
 from fastapi import HTTPException, status, Header
 from ext.db_connection import users_collection, session_store
 import bcrypt
+from loguru import logger
 from .schemas import LoginBase
 from utils.auth import generate_session, validate_user
 
