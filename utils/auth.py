@@ -25,11 +25,18 @@ def generate_session(user_dict):
 
 
 def validate_user(authorization):
+    logger.info(f"Validating User")
+    logger.info(f"Decoding JWT")
     data = jwt.decode(authorization, config.JWT_SECRET, algorithms=['HS256'])
+
+    logger.info(f"Getting User {data['email']} from DB")
     user_dict = users_collection.find_one({'email': data['email']})
+
     if not user_dict:
+        logger.error(f"The user is not Authorized")
         raise HTTPException(status_code=404, detail=f"Unauthorized user")
     session = session_store.find_one({'user_id': user_dict['id']})
     if not session:
+        logger.error(f"The session is already inactive")
         raise HTTPException(status_code=404, detail=f"Token Expire, please login again")
     return user_dict
