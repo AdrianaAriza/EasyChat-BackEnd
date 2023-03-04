@@ -1,10 +1,11 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
 class UserEdit(BaseModel):
-    nickname: str
-    avatar: str
-    language: str
+    nickname: Optional[str]
+    avatar: Optional[str]
+    language: Optional[str]
 
 
 class UserObjResponse(BaseModel):
