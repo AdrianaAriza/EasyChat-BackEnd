@@ -1,5 +1,5 @@
 
-from fastapi import HTTPException, status, Header
+from fastapi import HTTPException, status, Header, Depends
 from ext.db_connection import users_collection, session_store
 import bcrypt
 from loguru import logger
