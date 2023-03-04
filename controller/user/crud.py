@@ -47,7 +47,10 @@ def edit_user(user: UserEdit, authorization: str = Header(None)):
     data = user.dict()
 
     logger.info(f"updating user {user_dict['email']}")
-    users_collection.update_one({'email': user_dict['email']}, {"$set": data})
+    for k, v in data.items():
+        if v:
+            user_dict[k] = v
+    users_collection.update_one({'email': user_dict['email']}, {"$set": user_dict})
     user_dict = UserObjResponse(**users_collection.find_one({'email': user_dict['email']}))
     logger.info(f"updated")
     return user_dict
