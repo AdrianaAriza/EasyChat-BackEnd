@@ -28,8 +28,8 @@ def login(user: LoginBase):
 def logout(authorization: str = Depends(security)):
     logger.info(f" !! LogOut path !!")
     user_dict = validate_user(authorization)
-    logger.info(f"deleting session for user {user.email} from DB")
+    logger.info(f"deleting session for user {user_dict['email']} from DB")
     session_store.delete_one({'user_id': user_dict['id']})
-    logger.info(f"user {user.email} logged out")
+    logger.info(f"user {user_dict['email']} logged out")
     return {'success': True}
 
