@@ -25,7 +25,7 @@ def login(user: LoginBase):
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
 
 
-def logout(authorization: str = Header(security)):
+def logout(authorization: str = Depends(security)):
     logger.info(f" !! LogOut path !!")
     user_dict = validate_user(authorization)
     logger.info(f"deleting session for user {user.email} from DB")
