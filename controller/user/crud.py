@@ -2,9 +2,12 @@ import uuid
 from ext.db_connection import users_collection
 from loguru import logger
 from .schemas import UserCreateResponse, UserEdit, UserObjResponse, User
-from fastapi import Header
+from fastapi import Header, Depends
 import bcrypt
 from utils.auth import validate_user, generate_session
+from fastapi.security import HTTPBearer
+
+security = HTTPBearer()
 
 
 def user_exists(email):
@@ -41,7 +44,7 @@ def create_new_user(user: User):
     return res
 
 
-def edit_user(user: UserEdit, authorization: str = Header(None)):
+def edit_user(user: UserEdit, authorization: str = Depends(security)):
     logger.info(f" !! Updating path !!")
     user_dict = validate_user(authorization)
     data = user.dict()

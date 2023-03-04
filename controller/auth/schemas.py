@@ -14,6 +14,6 @@ class LoginBase(BaseModel):
 		schema_extra = {
 			"example": {
 				"email": "n.s@hotmail.com",
-				"passwd": "e8yJjdHk"
+				"password": "e8yJjdHk"
 			}
 		}

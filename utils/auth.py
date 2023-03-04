@@ -27,7 +27,7 @@ def generate_session(user_dict):
 def validate_user(authorization):
     logger.info(f"Validating User")
     logger.info(f"Decoding JWT")
-    data = jwt.decode(authorization, config.JWT_SECRET, algorithms=['HS256'])
+    data = jwt.decode(authorization.credentials, config.JWT_SECRET, algorithms=['HS256'])
 
     logger.info(f"Getting User {data['email']} from DB")
     user_dict = users_collection.find_one({'email': data['email']})
