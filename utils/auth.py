@@ -8,7 +8,7 @@ from fastapi import HTTPException
 
 def generate_session(user_dict):
     logger.info(f"Generating JWT for user {user_dict['nickname']}")
-    data = {'email': user_dict['email'], 'nickname': user_dict['nickname'], 'language': user_dict['language']}
+    data = {'email': user_dict['email'], 'nickname': user_dict['nickname'], 'language': user_dict['language'], 'avatar': user_dict['avatar']}
     token = jwt.encode(data, config.JWT_SECRET, algorithm='HS256')
 
     logger.info(f"creating new session for user {user_dict['nickname']}")
