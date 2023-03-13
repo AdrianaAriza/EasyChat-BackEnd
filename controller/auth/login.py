@@ -6,6 +6,7 @@ from loguru import logger
 from .schemas import LoginBase
 from utils.auth import generate_session, validate_user
 from fastapi.security import HTTPBearer
+import tensorflow as tf
 
 security = HTTPBearer()
 
@@ -14,6 +15,15 @@ def login(user: LoginBase):
     logger.info(f" !! LogIn path !!")
     logger.info(f"getting user {user.email} from DB")
     user_dict = users_collection.find_one({'email': user.email})
+    
+    reloaded = tf.saved_model.load('../../translator')
+    result = reloaded.translate(tf.constant(inputs))
+
+    logger.info(result[0].numpy().decode())
+    logger.info(result[1].numpy().decode())
+    logger.info(result[2].numpy().decode())
+    
+    
     if user_dict:
         hashed_password = user_dict['password'].encode('utf-8')
         if bcrypt.checkpw(user.password.encode('utf-8'), hashed_password):
