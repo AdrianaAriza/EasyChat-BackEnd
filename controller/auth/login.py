@@ -20,9 +20,10 @@ def login(user: LoginBase):
             token = generate_session(user_dict)
             return {'access_token': token, 'token_type': 'bearer'}
         logger.error(f"Invalid password")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password")
     else:
         logger.error(f"there is not user with email: {user.email}")
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"there is not user with email: {user.email}")
 
 
 def logout(authorization: str = Depends(security)):
