@@ -16,6 +16,12 @@ def login(user: LoginBase):
     logger.info(f"getting user {user.email} from DB")
     user_dict = users_collection.find_one({'email': user.email})
     
+    inputs = [
+    'Hola como estas?', # "It's really cold here."
+    'Estoy en la universidad', # "This is my life."
+    'El miercoles no voy a clase' # "His room is a mess"
+    ]
+    
     reloaded = tf.saved_model.load('../../translator')
     result = reloaded.translate(tf.constant(inputs))
 
