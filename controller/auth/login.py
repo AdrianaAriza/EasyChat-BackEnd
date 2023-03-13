@@ -22,7 +22,7 @@ def login(user: LoginBase):
     'El miercoles no voy a clase' # "His room is a mess"
     ]
     
-    reloaded = tf.saved_model.load('/translator')
+    reloaded = tf.saved_model.load('EasyChat-BackEnd/translator')
     result = reloaded.translate(tf.constant(inputs))
 
     logger.info(result[0].numpy().decode())
