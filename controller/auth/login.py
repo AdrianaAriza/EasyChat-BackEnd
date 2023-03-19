@@ -6,7 +6,7 @@ from loguru import logger
 from .schemas import LoginBase
 from utils.auth import generate_session, validate_user
 from fastapi.security import HTTPBearer
-import tensorflow as tf
+
 
 security = HTTPBearer()
 
