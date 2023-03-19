@@ -1,10 +1,10 @@
 from fastapi import APIRouter
-from .login import login, logout
+from .auth import login, logout
 from .schemas import LoginResponse
 from validators.error import FieldError
 
 router = APIRouter(
-    tags=["user"],
+    tags=["auth"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )

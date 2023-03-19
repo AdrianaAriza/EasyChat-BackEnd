@@ -3,7 +3,7 @@ from jose import JWTError, jwt
 from ext.db_connection import session_store, users_collection
 import uuid
 from loguru import logger
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 
 def generate_session(user_dict):
@@ -33,10 +33,10 @@ def validate_user(authorization):
     user_dict = users_collection.find_one({'email': data['email']})
 
     if not user_dict:
-        logger.error(f"The user is not Authorized")
-        raise HTTPException(status_code=404, detail=f"Unauthorized user")
+        logger.error(f"User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User not found")
     session = session_store.find_one({'user_id': user_dict['id']})
     if not session:
         logger.error(f"The session is already inactive")
-        raise HTTPException(status_code=404, detail=f"Token Expire, please login again")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Token Expire, please login again")
     return user_dict
